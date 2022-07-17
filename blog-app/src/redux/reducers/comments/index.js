@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const commentSlice = createSlice({
+export const comments = createSlice({
   name: "comments",
   initialState: {
     comments: [],
@@ -16,3 +16,7 @@ export const commentSlice = createSlice({
     
   },
 });
+ export const {  } =
+ comments.actions; 
+
+export default comments.reducer;
