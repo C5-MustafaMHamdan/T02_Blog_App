@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import auth from "../redux/reducers/auth";
 import { setlogin, logout } from "../redux/reducers/auth";
 import { useNavigate } from "react-router-dom";
- 
 
 /* Bret
 Sincere@april.biz */
@@ -19,37 +18,33 @@ const Login = () => {
   const [message, setMessage] = useState("");
 
   const { loginy, logouty } = useSelector((state) => {
-
     return {
       loginy: state.auth.isLoggedIn,
       logouty: state.auth.logout,
     };
   });
 
-
   const doLogin = () => {
     axios
       .get(`https://jsonplaceholder.typicode.com/users`)
       .then((result) => {
-       let id
+        let id;
         let usrInfo = {};
         let exist = false;
-        let Myname
+
         result.data.forEach((element) => {
           if (element.username === name && element.email === email) {
             exist = true;
             usrInfo = element;
-            
           }
           if (exist) {
             dispatch(setlogin(usrInfo));
-         
+
             navigate("/");
           } else {
             setMessage("the data you have entered is wrong ");
           }
         });
-
       })
       .catch((err) => {
         console.log(err);

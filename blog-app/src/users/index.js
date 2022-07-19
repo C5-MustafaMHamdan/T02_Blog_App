@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
  
  
-import { useNavigate } from "react-router-dom";
+ 
  import {getAllusers} from "../redux/reducers/users"
 
 /* Bret
@@ -12,11 +12,10 @@ Sincere@april.biz */
 const Users = () => {
   const dispatch = useDispatch();
 
-  const navigate = useNavigate();
+ 
 
   
  
-  const [message, setMessage] = useState("");
 
   const { users } = useSelector((state) => {
 
@@ -39,6 +38,10 @@ const Users = () => {
   useEffect(() => {
     getUsers();
   }, []);
+
+
+ 
+
 
 
 
