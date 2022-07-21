@@ -17,10 +17,10 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-  const { loginy, logouty } = useSelector((state) => {
+  const { loginy } = useSelector((state) => {
     return {
       loginy: state.auth.isLoggedIn,
-      logouty: state.auth.logout,
+       
     };
   });
 

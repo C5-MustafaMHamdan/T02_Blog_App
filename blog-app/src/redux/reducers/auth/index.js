@@ -24,14 +24,12 @@ export const auth = createSlice({
     },
     logout: (state, action) => {
       state.isLoggedIn = false;
+    localStorage.clear()
     },
 
     getUserInfo: (state, action) => {
-    
-
       state.profile = action.payload;
       localStorage.setItem("user", JSON.stringify(action.payload));
-     
     },
   },
 });

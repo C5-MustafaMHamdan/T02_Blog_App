@@ -6,18 +6,14 @@ import Info from "./profile";
 import { Routes, Route } from "react-router-dom";
 import Navy from "./navbar";
 function App() {
-
-
-
-
   return (
     <div className="App">
-      <Navy/>
+      <Navy />
       <Routes>
-      <Route path="/profile" element={<Info />} />
-      <Route path="/users" element={<Users />} />
-      <Route path="/posts" element={<Posts />} />
-       <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Info />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/posts" element={<Posts />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
   );

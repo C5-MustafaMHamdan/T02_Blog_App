@@ -6,18 +6,9 @@ export const users = createSlice({
     users: [],
   },
   reducers: {
-
-    
     getAllusers: (state, action) => {
       state.users = action.payload;
     },
-    
-
-
-
-
-
-    
   },
 });
 

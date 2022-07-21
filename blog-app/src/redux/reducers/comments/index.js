@@ -5,18 +5,14 @@ export const comments = createSlice({
   initialState: {
     comments: [],
   },
-  reducers: {
-
-
-
-
-
-
-
-    
-  },
+   reducers: {
+    setComments: (state, action) => {
+      state.comments = action.payload;
+      console.log(action.payload,"ttttt")
+    }}
 });
- export const {  } =
- comments.actions; 
+
+export const {setComments} = comments.actions;
 
 export default comments.reducer;
+

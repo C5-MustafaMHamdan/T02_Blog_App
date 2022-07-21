@@ -10,7 +10,6 @@ import { getUserInfo } from "../redux/reducers/auth";
 Sincere@april.biz */
 
 const Info = () => {
-  
   const [info, setInfo] = useState("");
   /*    let { id } = useParams();  */
 
@@ -26,7 +25,7 @@ const Info = () => {
       .get(`https://jsonplaceholder.typicode.com/users/${id}`)
       .then((result) => {
         console.log(result);
-        setInfo(result.data)
+        setInfo(result.data);
       })
       .catch((err) => {
         console.log(err);
@@ -36,14 +35,11 @@ const Info = () => {
     getinfo();
   }, []);
 
-console.log(info);
-
-
+  console.log(info);
 
   return (
     <div>
-
-<h1>Hi {info.name}</h1>
+      <h1>Hi {info.name}</h1>
       <input defaultValue={info.name} type={"text"} placeholder="Name" />
       <br></br>
       <input defaultValue={info.phone} type={"text"} placeholder="Phone" />
@@ -51,10 +47,7 @@ console.log(info);
       <input defaultValue={info.website} type={"text"} placeholder="Website" />
       <button></button>
       <br></br>
-
     </div>
-
-
   );
 };
 
