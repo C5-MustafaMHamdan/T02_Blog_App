@@ -82,7 +82,7 @@ const Users = () => {
                   }
                 })}
                 Posts {lengthy}
-                {element.name}
+                { }
                 {albums.map((ele) => {
                   if (ele.userId == element.id) {
                     albumy++;

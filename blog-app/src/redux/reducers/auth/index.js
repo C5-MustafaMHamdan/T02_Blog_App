@@ -29,6 +29,7 @@ export const auth = createSlice({
 
     getUserInfo: (state, action) => {
       state.profile = action.payload;
+      console.log(action.payload);
       localStorage.setItem("user", JSON.stringify(action.payload));
     },
   },

@@ -7,7 +7,7 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import "./style.css";
-import { setPosts, updatePost, deletePosts } from "../redux/reducers/posts";
+import { setPosts, updatePost, deletePosts ,addPost} from "../redux/reducers/posts";
 import Form from "react-bootstrap/Form";
 import { setComments} from "../redux/reducers/comments"
 
@@ -79,16 +79,7 @@ const Posts = () => {
   };
 
   ////////////update post//////////////////////
-
-  const updateItem = (id) => {
-    dispatch(
-      updatePost({
-        title,
-        body,
-        id,
-      })
-    );
-  };
+ 
 
   console.log(comments);
 
@@ -122,7 +113,11 @@ console.log(comments);
   return (
     <div className="posty">
       <h1>Posts</h1>
-    
+      {/*  add ////////////////////////// */}
+
+      <Button variant="primary" onClick={handleShow3}>
+      Add New Post
+      </Button>
       <Modal show={show3} onHide={handleClose3}>
                         <Modal.Header closeButton>
                           <Modal.Title>Add Post</Modal.Title>
@@ -137,7 +132,7 @@ console.log(comments);
                               <Form.Control
                                 type="text" 
                                 placeholder="Post Title"
-                                autoFocus
+                                onChange={(e)=>{setTitle(e.target.value)}}
                                 
                               />
                             </Form.Group>
@@ -146,7 +141,9 @@ console.log(comments);
                               controlId="exampleForm.ControlTextarea1"
                             >
                               <Form.Label>Body</Form.Label>
-                              <Form.Control as="textarea" rows={3} />
+                              <Form.Control as="textarea" rows={3}
+                              
+                              onChange={(e)=>{  setBody( e.target.value)}} />
                             </Form.Group>
                           </Form>
                         </Modal.Body>
@@ -159,13 +156,15 @@ console.log(comments);
                             variant="primary"
                             onClick={() => {
                               handleClose3();
-                           
+                   
+                              dispatch(addPost({title:title,body:body,id:postid ,userId:id}))
                             }}
                           >
                             Add
                           </Button>
                         </Modal.Footer>
                       </Modal>
+ 
       {posts &&
         posts.map((element, index) => {
           return (
@@ -181,7 +180,7 @@ console.log(comments);
                   </Card.Text>
                   {comments.map((com) => {
                                             if (element.id === com.postId) { 
-                                                return <Card body><h3> Commented by {com.email}</h3> {element.body}</Card>
+                                                return <Card body><h3> Commented by {com.email}</h3> {com.body}</Card>
                                             }
                                         })}
 

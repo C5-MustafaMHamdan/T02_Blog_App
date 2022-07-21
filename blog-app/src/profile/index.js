@@ -11,7 +11,11 @@ Sincere@april.biz */
 
 const Info = () => {
   const [info, setInfo] = useState("");
-  /*    let { id } = useParams();  */
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [website, setWebsite] = useState("");
+  const [address, setAddress] = useState("");
+  
 
   const { id } = useSelector((state) => {
     return {
@@ -40,12 +44,15 @@ const Info = () => {
   return (
     <div>
       <h1>Hi {info.name}</h1>
-      <input defaultValue={info.name} type={"text"} placeholder="Name" />
+      <input defaultValue={info.name} type={"text"} placeholder="Name"    onChange={(e)=>{setName(e.target.value)}}/>
       <br></br>
-      <input defaultValue={info.phone} type={"text"} placeholder="Phone" />
+      <input defaultValue={info.phone} type={"text"} placeholder="Phone" onChange={(e)=>{setPhone(e.target.value)}}/>
       <br></br>
-      <input defaultValue={info.website} type={"text"} placeholder="Website" />
-      <button></button>
+      <input defaultValue={info.website} type={"text"} placeholder="Website" onChange={(e)=>{setWebsite(e.target.value)}}/>
+      <br></br>
+      <input defaultValue={info.address} type={"text"} placeholder="Website" onChange={(e)=>{setAddress(e.target.value)}} />
+      <br></br>
+      <button>Update Info</button>
       <br></br>
     </div>
   );
