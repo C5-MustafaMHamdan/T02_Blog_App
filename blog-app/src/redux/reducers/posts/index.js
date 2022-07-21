@@ -11,10 +11,11 @@ export const posts = createSlice({
     },
     addPost: (state, action) => {
       state.posts.unshift(action.payload);
+      console.log(action.payload ,"ttttttttttttttttttttttttttt")
     },
     updatePost: (state, action) => {
       state.posts = state.posts.map((element) => {
-        console.log(action.payload);
+        console.log(action.payload,"mustafaupdate");
         if (element.id === action.payload.id) {
 
           element.body = action.payload.body || element.body

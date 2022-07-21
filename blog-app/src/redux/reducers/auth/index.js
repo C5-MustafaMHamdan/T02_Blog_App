@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const auth = createSlice({
   name: "auth",
   initialState: {
-    token: {},
+    token:false,
     isLoggedIn: localStorage.getItem("token") ? true : false,
     name: localStorage.getItem("name") ? localStorage.getItem("name") : "",
     id: localStorage.getItem("id") ? localStorage.getItem("id") : "",
@@ -17,10 +17,15 @@ export const auth = createSlice({
       state.isLoggedIn = true;
 
       state.id = action.payload.id;
-      console.log(action.payload, "ffffffff");
+     
       localStorage.setItem("id", state.id);
       state.name = action.payload.name;
       localStorage.setItem("name", state.name);
+
+      state.profile = action.payload;
+      localStorage.setItem("profile", JSON.stringify(action.payload));
+      console.log(action);
+     
     },
     logout: (state, action) => {
       state.isLoggedIn = false;
@@ -30,11 +35,20 @@ export const auth = createSlice({
     getUserInfo: (state, action) => {
       state.profile = action.payload;
       console.log(action.payload);
-      localStorage.setItem("user", JSON.stringify(action.payload));
+      localStorage.setItem("profile", JSON.stringify(action.payload));
+
     },
+    updateUserInfo: (state, action) => {
+      state.profile = action.payload;
+      console.log(action.payload);
+      localStorage.setItem("profile", JSON.stringify(action.payload));
+state.name=action.payload.name
+    }
+
+
   },
 });
 
-export const { setlogin, logout, getUserInfo } = auth.actions;
+export const { setlogin, logout, getUserInfo,updateUserInfo } = auth.actions;
 
 export default auth.reducer;

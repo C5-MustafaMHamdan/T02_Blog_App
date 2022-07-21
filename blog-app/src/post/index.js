@@ -7,9 +7,14 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import "./style.css";
-import { setPosts, updatePost, deletePosts ,addPost} from "../redux/reducers/posts";
+import {
+  setPosts,
+  updatePost,
+  deletePosts,
+  addPost,
+} from "../redux/reducers/posts";
 import Form from "react-bootstrap/Form";
-import { setComments} from "../redux/reducers/comments"
+import { setComments } from "../redux/reducers/comments";
 
 /* Bret
 Sincere@april.biz */
@@ -17,13 +22,14 @@ Sincere@april.biz */
 const Posts = () => {
   const dispatch = useDispatch();
 
-  const [title, setTitle] = useState(""); 
+  const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-
   const [postid, setPostid] = useState("");
+  /* localStorage.setItem("counter",counter) */
 
+  /*  */
 
-
+  const [comy, setComy] = "";
   const [deleted, setDeleted] = useState("");
 
   const [show, setShow] = useState(false);
@@ -31,27 +37,24 @@ const Posts = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-
   const [show2, setShow2] = useState(false);
 
   const handleClose2 = () => setShow2(false);
   const handleShow2 = () => setShow2(true);
-
 
   const [show3, setShow3] = useState(false);
 
   const handleClose3 = () => setShow3(false);
   const handleShow3 = () => setShow3(true);
 
-
-  const { posts, id ,comments} = useSelector((state) => {
-    console.log(state)
+  const { posts, id, comments } = useSelector((state) => {
     return {
       posts: state.posts.posts,
       id: state.auth.id,
-      comments:state.comments.comments
+      comments: state.comments.comments,
     };
   });
+  let counter = posts.length + 1;
 
   //////////////get post//////////////////
 
@@ -65,7 +68,6 @@ const Posts = () => {
         console.log(err);
       });
   };
-  
 
   ////////////////delete post////////////////////
 
@@ -79,36 +81,24 @@ const Posts = () => {
   };
 
   ////////////update post//////////////////////
- 
 
-  console.log(comments);
+  ////////////comments/////////
 
-
-////////////comments/////////
-
- const getcomments = () => {
-  axios
-    .get(`https://jsonplaceholder.typicode.com/comments`)
-    .then((result) => {
-     console.log(result.data);
-      dispatch(setComments(result.data));
-      
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-useEffect(() => {
-  getposts();
-  getcomments()
-}, []);
- 
-
-
-
-
-
-console.log(comments);
+  const getcomments = () => {
+    axios
+      .get(`https://jsonplaceholder.typicode.com/comments`)
+      .then((result) => {
+        dispatch(setComments(result.data));
+        setComy(result.data[500].postId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    getposts();
+    getcomments();
+  }, []);
 
   return (
     <div className="posty">
@@ -116,55 +106,59 @@ console.log(comments);
       {/*  add ////////////////////////// */}
 
       <Button variant="primary" onClick={handleShow3}>
-      Add New Post
+        Add New Post
       </Button>
       <Modal show={show3} onHide={handleClose3}>
-                        <Modal.Header closeButton>
-                          <Modal.Title>Add Post</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          <Form>
-                            <Form.Group
-                              className="mb-3"
-                              controlId="exampleForm.ControlInput1"
-                            >
-                              <Form.Label>Title</Form.Label>
-                              <Form.Control
-                                type="text" 
-                                placeholder="Post Title"
-                                onChange={(e)=>{setTitle(e.target.value)}}
-                                
-                              />
-                            </Form.Group>
-                            <Form.Group
-                              className="mb-3"
-                              controlId="exampleForm.ControlTextarea1"
-                            >
-                              <Form.Label>Body</Form.Label>
-                              <Form.Control as="textarea" rows={3}
-                              
-                              onChange={(e)=>{  setBody( e.target.value)}} />
-                            </Form.Group>
-                          </Form>
-                        </Modal.Body>
-                        <Modal.Footer>
-                          <Button variant="secondary" onClick={handleClose3}>
-                            Close
-                          </Button>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Post</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Post Title"
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+              />
+            </Form.Group>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Label>Body</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                onChange={(e) => {
+                  setBody(e.target.value);
+                }}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose3}>
+            Close
+          </Button>
 
-                          <Button
-                            variant="primary"
-                            onClick={() => {
-                              handleClose3();
-                   
-                              dispatch(addPost({title:title,body:body,id:postid ,userId:id}))
-                            }}
-                          >
-                            Add
-                          </Button>
-                        </Modal.Footer>
-                      </Modal>
- 
+          <Button
+            variant="primary"
+            onClick={() => {
+              handleClose3();
+
+              dispatch(
+                addPost({ title: title, body: body, userId: id, id: counter })
+              );
+            }}
+          >
+            Add
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       {posts &&
         posts.map((element, index) => {
           return (
@@ -179,11 +173,14 @@ console.log(comments);
                     <p>{element.body}</p>
                   </Card.Text>
                   {comments.map((com) => {
-                                            if (element.id === com.postId) { 
-                                                return <Card body><h3> Commented by {com.email}</h3> {com.body}</Card>
-                                            }
-                                        })}
-
+                    if (element.id === com.postId) {
+                      return (
+                        <Card body>
+                          <h3> Commented by {com.email}</h3> {com.body}
+                        </Card>
+                      );
+                    }
+                  })}
 
                   {id == element.userId ? (
                     <>
@@ -217,20 +214,18 @@ console.log(comments);
                           </button>
                         </Modal.Footer>
                       </Modal>
-
                       {/* update    ////////////////////////////////////                           */}
-
-                      <Button variant="primary" onClick={()=>{handleShow2() 
-                          setTitle(element.title)
-                          setBody(element.body)
+                      <Button
+                        variant="primary"
+                        onClick={() => {
+                          handleShow2();
+                          setTitle(element.title);
+                          setBody(element.body);
                           setPostid(element.id)
-                          
-                          }   }>
+                        }}
+                      >
                         Update
                       </Button>
-
-
-
                       <Modal show={show2} onHide={handleClose2}>
                         <Modal.Header closeButton>
                           <Modal.Title>Update Post</Modal.Title>
@@ -243,10 +238,11 @@ console.log(comments);
                             >
                               <Form.Label>Title</Form.Label>
                               <Form.Control
-                                type="text" 
+                                type="text"
                                 placeholder="Post Title"
-                              onChange={(e)=>{setTitle(e.target.value)}}
-                                
+                                onChange={(e) => {
+                                  setTitle(e.target.value);
+                                }}
                               />
                             </Form.Group>
                             <Form.Group
@@ -254,11 +250,12 @@ console.log(comments);
                               controlId="exampleForm.ControlTextarea1"
                             >
                               <Form.Label>Body</Form.Label>
-                              <Form.Control as="textarea" rows={3} 
-                              
-                              
-                              onChange={(e)=>{  setBody( e.target.value)}}
-
+                              <Form.Control
+                                as="textarea"
+                                rows={3}
+                                onChange={(e) => {
+                                  setBody(e.target.value);
+                                }}
                               />
                             </Form.Group>
                           </Form>
@@ -272,7 +269,11 @@ console.log(comments);
                             variant="primary"
                             onClick={() => {
                               handleClose2();
-                             dispatch(updatePost({title:title,body:body,id:postid}))
+                              dispatch(
+                                updatePost({
+                                  title:title,body:body,id:postid
+                                })
+                              );
                             }}
                           >
                             update
