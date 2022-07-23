@@ -163,7 +163,7 @@ const Posts = () => {
         posts.map((element, index) => {
           return (
             <div key={index}>
-              <Card border="primary" style={{ width: "40rem" }}>
+              <Card border="primary" style={{ width: "25rem" }}>
                 userId {element.userId} post {element.id}
                 <Card.Header>
                   <h4> {element.title}</h4>{" "}

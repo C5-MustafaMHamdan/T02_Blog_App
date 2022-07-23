@@ -48,7 +48,7 @@ const Info = () => {
 
 const updateone =()=>{
 
-dispatch(updateUserInfo ({name:name}) )
+dispatch(updateUserInfo ({name:name} ,{phone:phone},{website:website} ) )
 
 }
 
@@ -62,8 +62,7 @@ dispatch(updateUserInfo ({name:name}) )
       <br></br>
       <input defaultValue={profile.website} type={"text"} placeholder="Website" onChange={(e)=>{setWebsite(e.target.value)}}/>
       <br></br>
-      <input defaultValue={profile.address} type={"text"} placeholder="Website" onChange={(e)=>{setAddress(e.target.value)}} />
-      <br></br>
+       <br></br>
       <button  onClick={updateone}    >Update Info</button>
       <br></br>
     </div>
